@@ -5,7 +5,6 @@ on:
     branches:
       - main
   schedule:
-    # 🕒 यह क्रॉन टाइमर हर 5 घंटे में सर्वर को बिना रुके नया बैकअप कंप्यूटर देकर लाइव चालू रखेगा
     - cron: '0 */5 * * *'
   workflow_dispatch:
 
@@ -23,9 +22,9 @@ jobs:
         
     - name: Auto-Inject Infinite Live Loop
       run: |
-        echo "Bypassing server timeout constraints... Activating 6-hour scheduler bypass."
+        echo "Bypassing server timeout constraints..."
         while true; do
-          ffmpeg -re -loop 1 -i background.jpg.jpg -i musicmp3.mp4 -c:v libx264 -preset ultrafast -tune stillimage -b:v 1000k -maxrate 1000k -bufsize 2000k -g 30 -c:a aac -b:a 96k -ar 44100 -f flv "rtmp://://youtube.com{{ secrets.YOUTUBE_KEY }}"
+          ffmpeg -re -loop 1 -i background.jpg.jpg -i musicmp3.mp4 -c:v libx264 -preset ultrafast -tune stillimage -b:v 1000k -maxrate 1000k -bufsize 2000k -g 30 -c:a aac -b:a 96k -ar 44100 -f flv "rtmp://://youtube.com"
           echo "Stream connection blinked? Re-injecting packets in 2 seconds..."
           sleep 2
         done
